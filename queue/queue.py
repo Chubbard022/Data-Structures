@@ -16,7 +16,7 @@ class Queue:
       return None
     remove_item = self.storage.pop(0)
     self.size -= 1
-
     return remove_item
+    
   def len(self):
     return self.size
