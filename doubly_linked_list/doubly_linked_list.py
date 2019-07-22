@@ -39,30 +39,86 @@ class DoublyLinkedList:
     self.head = node
     self.tail = node
     self.length = 1 if node is not None else 0
-
+    
   def __len__(self):
     return self.length
 
   def add_to_head(self, value):
-    pass
+    if self.head:
+      self.head.insert_before(value)
+      self.head = self.head.prev
+    else:
+      self.head = ListNode(value)
+      self.tail = self.head
+    self.length += 1
 
   def remove_from_head(self):
-    pass
+    removed_head = self.head
+    self.head.delete()
+    if self.head.next:
+      self.head = self.head.next
+      self.head.prev = None
+    else:
+      self.head = None
+      self.tail = None
+    self.length -= 1
+    return removed_head.value
+
 
   def add_to_tail(self, value):
-    pass
+    if self.tail:
+      self.tail.insert_after(value)
+      self.tail = self.tail.next
+    else:
+      self.tail = ListNode(value)
+      self.tail = self.tail.next
+    self.length += 1
 
   def remove_from_tail(self):
-    pass
+    if self.tail == self.head:
+      self.tail = None
+      self.head = None
+
+    elif self.tail.prev:
+      self.tail = self.tail.prev
+      self.tail.next = None
+      self.tail.delete()
+    self.length -= 1
+    return self.tail
 
   def move_to_front(self, node):
-    pass
+    if self.head is not node:
+      if node.next and node.prev:
+        node.delete()
+      node.next = self.head
+      self.head = node
+      
 
   def move_to_end(self, node):
-    pass
+    if node == self.head:
+      self.head = node.next
+    self.delete(node)
+    self.add_to_tail(node.value)
 
   def delete(self, node):
-    pass
-    
+    node.delete()
+    if node == self.head:
+      if node.next:
+        self.head = node.next
+        self.head.prev = None
+      else:
+        self.head = None
+    if node == self.tail:
+      self.tail = None
+    self.length -= 1
+
   def get_max(self):
-    pass
+    if not self.head:
+      return None
+    current_node = self.head
+    list_max = 0
+    while current_node:
+      if current_node.value > list_max:
+        list_max = current_node.value
+      current_node = current_node.next
+    return list_max
