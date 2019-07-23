@@ -1,15 +1,17 @@
-from doubly_linked_list import DoublyLinkedList 
+from doubly_linked_list import DoublyLinkedList
+
 
 class TextBuffer:
     # init gives us the option to initialize some text in the
-    # buffer right off the bat 
+    # buffer right off the bat
     def __init__(self, init=None):
         self.contents = DoublyLinkedList()
         # check if an init string is provided
         # if so, put the contents of the init string in self.contents
         if init:
-            self.contents = init
-            
+            for index in init:
+                self.contents.add_to_tail(index)
+
     def __str__(self):
         # needs to return a string to print 
         s = ""
@@ -20,25 +22,22 @@ class TextBuffer:
         return s
 ​
     def append(self, string_to_add):
-        if self.head is None and self.tail is None:
-            self.head = string_to_add
-            self.tail = string_to_add
-        elif self.head is None:
-            self.head = string_to_add
-        else:
-            self.head.next = string_to_add
-            self.head.prev = self.head
+        for letter in string_to_add:
+            self.contents.add_to_tail(letter)
     
     def prepend(self, string_to_add):
-        # reverse the incoming string to maintain correct 
-        # order when adding to the front of the text buffer 
-        pass
-​
+       for letter in string_to_add:
+           self.contents.add_to_head(letter)
+
     def delete_front(self, chars_to_remove):
-        pass
-​
+        for i in range(self.contents.length):
+            while i < chars_to_remove.length:
+                self.contents.remove_from_head(i)
+        
     def delete_back(self, chars_to_remove):
-        pass
+        for i in range(self.contents.length):
+            while i < chars_to_remove.length:
+                self.contents.remove_from_tail(i)
 ​
     """
     Join other_buffer to self
