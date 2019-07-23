@@ -54,3 +54,6 @@ Answer the following questions for each of the data structures you implemented a
 10. What is the runtime complexity of `DoublyLinkedList.delete`?
     a. O(1)
     a. Compare the runtime of the doubly linked list's `delete` method with the worst-case runtime of the JS `Array.splice` method. Which method generally performs better?
+
+   --The Linked list has a run time of O(1) since its runtime stays the same no matter the size of the list
+   -- splice worst-case is O(n). This is because it has to change the index of every item in the array that gets moved. 
