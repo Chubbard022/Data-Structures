@@ -20,25 +20,21 @@ class TextBuffer:
             s += current.value
             current = current.next
         return s
-​
     def append(self, string_to_add):
         for letter in string_to_add:
             self.contents.add_to_tail(letter)
     
     def prepend(self, string_to_add):
-       for letter in string_to_add:
+       for letter in string_to_add[::-1]:
            self.contents.add_to_head(letter)
 
     def delete_front(self, chars_to_remove):
-        for i in range(self.contents.length):
-            while i < chars_to_remove.length:
-                self.contents.remove_from_head(i)
+        for letter in range(chars_to_remove):
+            self.contents.remove_from_head()
         
     def delete_back(self, chars_to_remove):
-        for i in range(self.contents.length):
-            while i < chars_to_remove.length:
-                self.contents.remove_from_tail(i)
-​
+        for letter in range(chars_to_remove):
+            self.contents.remove_from_tail()
     """
     Join other_buffer to self
     The input buffer gets concatenated to the end of this buffer 
@@ -48,34 +44,21 @@ class TextBuffer:
     def join(self, other_buffer):
         # we might want to check that other_buffer is indeed a text buffer 
         # set self list tail's next node to be the head of the other buffer 
-        
+        if(other_buffer.contents.length is 0):
+            print("ERROR")
+            return
+        if isinstance(other_buffer,TextBuffer):
+            self.contents.tail.next = other_buffer.contents.head
+            other_buffer.head.prev = self.contents.tail
+            self.contents.tail = other_buffer.tail
+            self.contents.length += other_buffer.contents.length
         # set other_buffer head's prev node to be the tail of this buffer
         
-        pass
         
     # if we get fed a string instead of a text buffer instance,
     # initialize a new text buffer with this string and then 
     # call the join method 
     def join_string(self, string_to_join):
-        pass
-​
-if __name__ == '__main__':
-    text = TextBuffer("Super")
-    print(text)
-​
-    text.join_string("califragilisticexpealidocious")
-    print(text)
-​
-    text.append(" is ")
-    text.join(TextBuffer("weird."))
-​
-    print(text)
-​
-    text.delete_back(6)
-    print(text)
-​
-    text.prepend("Hey! ")
-    print(text)
-​
-    text.delete_front(4)
-    print(text)
+        join_string = TextBuffer(string_to_join)
+        self.join(join_string)
+        
