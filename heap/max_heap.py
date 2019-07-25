@@ -12,10 +12,10 @@ class Heap:
       return None
     if self.get_size() == 1:    # one-item list
       return self.storage.pop(0)
-    ret = self.storage[0]
+    ref = self.storage[0]
     self.storage[0] = self.storage.pop(self.get_size() - 1)
     self._sift_down(0)
-    return ret
+    return ref
 
   def get_max(self):
     return self.storage[0]
@@ -33,7 +33,7 @@ class Heap:
   def _sift_down(self, index):
     left = 2*index+1
     right = 2*index+2
-
+  
     if left < self.get_size():
       if right < self.get_size():
           if self.storage[right] > self.storage[left]:
