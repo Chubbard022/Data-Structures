@@ -8,16 +8,14 @@ class Heap:
 
   def delete(self):
     # base case, no elements
-    if self.get_size() < 1:
+    if self.get_size() < 1:     # empty list, bail
       return None
-    #second base case, only one
-    if self.get_size() == 1:
+    if self.get_size() == 1:    # one-item list
       return self.storage.pop(0)
-    else: 
-      deleted_node = self.storage[0]
-      self.storage[0] = self.storage.pop(self.get_size() -1)
-      self._sift_down(0)
-      return deleted_node
+    ret = self.storage[0]
+    self.storage[0] = self.storage.pop(self.get_size() - 1)
+    self._sift_down(0)
+    return ret
 
   def get_max(self):
     return self.storage[0]
@@ -26,26 +24,20 @@ class Heap:
     return len(self.storage)
 
   def _bubble_up(self, index):
-    index = 0
-    # base case
-    if self.get_size() is 0:
-      return None
-    else:
-      #checking to see if child node is bigger than parent node
-      while(self.storage[index] > self.storage[(index - 1)//2] and index > 0):
-        self.storage[index], self.storage[(index - 1)//2] = self.storage[(index - 1)//2], self.storage[index]
-        index = self.storage[(index - 1)//2]
+    if index == 0:
+      return
+    while (self.storage[index] > self.storage[(index-1) // 2] and index > 0):
+      self.storage[index], self.storage[(index-1) // 2] = self.storage[(index-1) // 2], self.storage[index]
+      index = (index-1) // 2
 
   def _sift_down(self, index):
-    left = 2 * index + 1
-    right = 2 * index + 2
+    left = 2*index+1
+    right = 2*index+2
 
-    if self.get_size() == 0:
-      return None
-    else:
-      if left < self.get_size():
-        largest_node = left
-        if right < self.get_size():
+    if left < self.get_size():
+      if right < self.get_size():
           if self.storage[right] > self.storage[left]:
-            self.storage[index], self.storage[left] =  self.storage[left],self.storage[index]
-            self._sift_down(left)
+              left = right
+          if self.storage[index] < self.storage[left]:
+              self.storage[index], self.storage[left] = self.storage[left], self.storage[index]
+              self._sift_down(left)
