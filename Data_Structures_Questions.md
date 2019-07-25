@@ -19,15 +19,15 @@ Answer the following questions for each of the data structures you implemented a
 ## Heap
 
 1. What is the runtime complexity of `_bubble_up`?
-
+    a. 0(log n)
 2. What is the runtime complexity of `_sift_down`?
-
+    a. 0(log n)
 3. What is the runtime complexity of `insert`?
-
+    a. 0(1)
 4. What is the runtime complexity of `delete`?
-
+    a. 0(logN)
 5. What is the runtime complexity of `get_max`?
-
+    a. 0(1)
 ## Doubly Linked List
 
 1. What is the runtime complexity of `ListNode.insert_after`?
