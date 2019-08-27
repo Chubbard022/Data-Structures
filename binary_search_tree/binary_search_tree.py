@@ -5,13 +5,44 @@ class BinarySearchTree:
     self.right = None
 
   def insert(self, value):
-    pass
+    if value < self.value:
+      #check to see if there is a left value
+      if not self.left:
+        self.left = BinarySearchTree(value)
+      else:
+        # recursively putting value in tree once find empty spot
+        self.left.insert(value)
+    else:
+      if not self.right:
+        self.right = BinarySearchTree(value)
+      else:
+        self.right.insert(value)
 
   def contains(self, target):
-    pass
-
+    if target == self.value:
+      return True
+    elif target < self.value:
+      if self.left:
+        return self.left.contains(target)
+      else:
+        return False
+    elif target > self.value:
+        if self.right:
+          return self.right.contains(target)
+        else: 
+          return False
+    else:
+      return False
   def get_max(self):
-    pass
+    #look at the right most child of parent
+    if self.right:
+      return self.right.get_max()
+    else: 
+      return self.value
 
   def for_each(self, cb):
-    pass
+    cb(self.value)
+    if self.left:
+      self.left.for_each(cb)
+    if self.right:
+      self.right.for_each(cb)
